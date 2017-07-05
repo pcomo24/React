@@ -11,15 +11,29 @@ import {BrowserRouter, Route, Link} from 'react-router-dom';
 
 import MyForm from './myform';
 
+import {auth} from './fsociety.js';
+
 const Home = () => (<h2>Home</h2>)
 
 const theme = getMuiTheme({palette: {primary1Color: red700}});
 class App extends Component {
+    login () {
+        auth()
+            .then(function (user) {
+                console.log(user);
+            })
+            .catch(function (e) {
+                console.log(e);
+            });
+    }
   render() {
     return (
         <MuiThemeProvider muiTheme={theme}>
             <div>
                 <AppBar title="My Awesome Form" />
+                <div>
+                    <button onClick={(e) => this.login()}>Login</button>
+                </div>
                 <BrowserRouter>
                     <div>
                         <ul>

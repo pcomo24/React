@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import './myform.css';
+import database, {User} from './fsociety';
 
 class MyForm extends Component {
     constructor (props) {
@@ -29,6 +30,10 @@ class MyForm extends Component {
 
     handleSubmit(event) {
         console.log('submitted: ',  this.state);
+        database.ref('contacts/' + User.user.uid).set ({
+            paul: {name: "Paul B"},
+            jim: {name: "Jim"}
+        });
         event.preventDefault();
     }
 
