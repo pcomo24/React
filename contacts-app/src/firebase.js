@@ -39,6 +39,15 @@ export function auth () {
     });
 }
 
+firebase.auth()
+    .onAuthStateChanged(function(user) {
+        if (user) {
+            User.user = user;
+
+            console.log(user);
+        }
+    });
+
 
 
 

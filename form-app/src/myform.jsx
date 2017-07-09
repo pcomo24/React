@@ -8,6 +8,8 @@ import MenuItem from 'material-ui/MenuItem';
 import './myform.css';
 import database, {User} from './fsociety';
 
+
+
 class MyForm extends Component {
     constructor (props) {
         super(props);
@@ -63,5 +65,6 @@ class MyForm extends Component {
         )
     }
 }
+
 
 export default MyForm;

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 
 import AddContact from './add';
 import ContactList from './contacts' ;
@@ -28,23 +30,25 @@ class App extends Component {
     }
   render() {
     return (
-      <MuiThemeProvider muiTheme={theme}>
-          <div>
-              <AppBar title='Contact List' />
-              <BrowserRouter>
-                  <div>
-                      <button onClick={(e) => this.login()}>Login</button>
-                      <ul>
-                          <li><Link to="/">Home</Link></li>
-                          <li><Link to="/add">Add Contact</Link></li>
-                      </ul>
-                      <Route exact path="/" component={ContactList} />
-                      <Route path="/add" component={ AddContact } />
-                  </div>
+        <Provider store={store}>
+          <MuiThemeProvider muiTheme={theme}>
+              <div>
+                  <AppBar title='Contact List' />
+                  <BrowserRouter>
+                      <div>
+                          <button onClick={(e) => this.login()}>Login</button>
+                          <ul>
+                              <li><Link to="/">Home</Link></li>
+                              <li><Link to="/add">Add Contact</Link></li>
+                          </ul>
+                          <Route exact path="/" component={ContactList} />
+                          <Route path="/add" component={ AddContact } />
+                      </div>
 
-                </BrowserRouter>
-          </div>
-      </MuiThemeProvider>
+                    </BrowserRouter>
+              </div>
+          </MuiThemeProvider>
+        </Provider>
     );
   }
 }

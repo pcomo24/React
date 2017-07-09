@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import database, {User} from './firebase';
 import './contact.css';
+import {addContact} from './actions.js';
+import { connect } from 'react-redux';
 
 
 function compare(a, b) {
@@ -41,13 +43,14 @@ class AddContact extends Component {
 
     handleSubmit (event) {
         console.log(this.state.name);
-        var contacts = localStorage.contacts || '[]';
-        contacts = JSON.parse(contacts);
-        contacts.push(this.state);
-        contacts.sort(compare);
-        database.ref('contacts/' + User.user.uid).set(contacts);
-        localStorage.contacts = JSON.stringify(contacts);
+        //var contacts = localStorage.contacts || '[]';
+        //contacts = JSON.parse(contacts);
+        //contacts.push(this.state);
+        //contacts.sort(compare);
+        //database.ref('contacts/' + User.user.uid).set(contacts);
+        //localStorage.contacts = JSON.stringify(contacts);
         event.preventDefault();
+        this.props.onSubmit(this.state.contacts);
     }
 
 
@@ -91,9 +94,31 @@ class AddContact extends Component {
                         </CardActions>
                     </Card>
                 </form>
+                {Object.keys(this.props.contacts).map((key) => {
+                    return <div key={key}>
+                        Key: {key}, Value: {this.props.contacts[key].name}
+                    </div>;
+                })}
             </div>
         )
     }
 }
+
+function mapStateToProps (state) {
+    return {
+        contacts: state
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        onSubmit: function (id, data) {
+            dispatch(addContact(id, data))
+        }
+    }
+}
+AddContact = connect(
+    mapStateToProps, mapDispatchToProps
+)(AddContact)
 
 export default AddContact;
